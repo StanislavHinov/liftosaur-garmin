@@ -1,0 +1,4 @@
+<properties>
+    <property id="apiKey" type="string"></property>
+    <property id="recordActivity" type="boolean">true</property>
+</properties>

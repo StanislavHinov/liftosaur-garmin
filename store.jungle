@@ -1,0 +1,4 @@
+# Connect IQ Store build: no tests, and an empty built-in key (users enter theirs in Garmin Connect).
+project.manifest = manifest.xml
+base.sourcePath = source
+base.resourcePath = resources;resources-store

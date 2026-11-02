@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Liftosaur app, program or Liftoscript problem
+    url: https://github.com/astashov/liftosaur/issues
+    about: Problems with Liftosaur itself, your program or Liftoscript go to Liftosaur's tracker.
+  - name: Questions about Liftosaur
+    url: https://www.reddit.com/r/liftosaur/
+    about: Ask general questions on the Liftosaur subreddit.

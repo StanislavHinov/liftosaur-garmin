@@ -1,0 +1,13 @@
+resources-secret/
+*.der
+*.pem
+bin/
+*.prg
+developer_key.*
+.superpowers/
+.DS_Store
+*.iq
+.vscode/
+.idea/
+.env
+store/preview-video*.mp4

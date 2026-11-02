@@ -1,0 +1,53 @@
+name: Watch support
+description: Ask for the app to run on a Garmin watch that is not supported yet.
+title: "[Watch]: "
+labels: ["watch support"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The supported watches are listed in `manifest.xml`. The app needs Connect IQ API level 5 or higher; watches below that cannot run it.
+  - type: input
+    id: model
+    attributes:
+      label: Watch model
+      description: The full name, with size or edition if there are several.
+      placeholder: e.g. Forerunner 265S Music
+    validations:
+      required: true
+  - type: input
+    id: api-level
+    attributes:
+      label: Connect IQ API level, if known
+      description: Listed on Garmin's Connect IQ compatible devices page.
+      placeholder: e.g. 5.1.0
+    validations:
+      required: false
+  - type: dropdown
+    id: controls
+    attributes:
+      label: Controls
+      options:
+        - Buttons and touch
+        - Buttons only
+        - Touch only (no Up and Down buttons)
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: test
+    attributes:
+      label: Can you test a build on this watch?
+      description: Testing means sideloading a `.prg` file over USB and reporting what works.
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Firmware version, or anything that differs from similar watches.
+    validations:
+      required: false

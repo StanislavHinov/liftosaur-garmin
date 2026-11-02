@@ -1,0 +1,18 @@
+<strings>
+    <string id="AppName">Lift Log for Liftosaur</string>
+    <string id="ApiKeyTitle">Liftosaur API key</string>
+    <string id="ApiKeyPrompt">In Liftosaur: Settings, API Keys. Starts with lftsk_</string>
+    <string id="RecordTitle">Record Garmin activity (turn off when using liftosaur2garmin)</string>
+    <!-- Labels Garmin Connect shows for the activity's fields (resources/fitcontributions.xml). -->
+    <string id="FitExercise">Exercise</string>
+    <string id="FitSet">Set</string>
+    <string id="FitReps">Reps</string>
+    <string id="FitWeight">Weight</string>
+    <string id="FitProgram">Program</string>
+    <string id="FitDay">Day</string>
+    <string id="FitTotalSets">Sets</string>
+    <string id="FitVolume">Volume</string>
+    <string id="FitNoUnit"></string>
+    <string id="ComplicationLong">Lift Log: next workout</string>
+    <string id="ComplicationShort">LIFT</string>
+</strings>

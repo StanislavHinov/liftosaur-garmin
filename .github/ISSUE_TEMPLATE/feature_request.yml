@@ -1,0 +1,52 @@
+name: Feature request
+description: Suggest a change or a new feature for the watch app.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The app can only do what the Liftosaur Workout API allows. Changes to Liftosaur itself, programs or Liftoscript belong in Liftosaur's tracker: https://github.com/astashov/liftosaur/issues
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What you are trying to do on the watch, and what stops you.
+      placeholder: During a superset I have to browse back to the first exercise after every set.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What the watch should do. Say how it works with buttons and with touch, if you know.
+    validations:
+      required: true
+  - type: dropdown
+    id: api-support
+    attributes:
+      label: Does the Liftosaur Workout API support this?
+      description: See https://www.liftosaur.com/api/v1. Features the API cannot do are out of scope.
+      options:
+        - "Yes"
+        - "No"
+        - Unsure
+    validations:
+      required: true
+  - type: dropdown
+    id: apple-watch
+    attributes:
+      label: Does the Liftosaur Apple Watch app have this?
+      options:
+        - "Yes"
+        - "No"
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Other ways to solve the problem, or what you do today instead.
+    validations:
+      required: false

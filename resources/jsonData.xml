@@ -1,0 +1,4 @@
+<resources>
+    <!-- Liftosaur exercise id -> FIT exercise category * 65536 + exercise name. Built by tools/fit-exercises. -->
+    <jsonData id="FitExercises" filename="jsonData/fit_exercises.json"/>
+</resources>

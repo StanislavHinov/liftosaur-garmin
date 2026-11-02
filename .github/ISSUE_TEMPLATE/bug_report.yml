@@ -1,0 +1,128 @@
+name: Bug report
+description: Something on the watch does not work as it should.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Problems with your program, Liftoscript, or the Liftosaur phone or web app belong in Liftosaur's tracker: https://github.com/astashov/liftosaur/issues
+
+        **Remove your Liftosaur API key from anything you paste.** It starts with `lftsk_`.
+  - type: dropdown
+    id: watch
+    attributes:
+      label: Watch model
+      description: Pick "Other" and name it below if your watch is not listed.
+      options:
+        - Forerunner 165
+        - Forerunner 255 / 255S
+        - Forerunner 265 / 265S
+        - Forerunner 570
+        - Forerunner 955
+        - Forerunner 965
+        - Forerunner 970
+        - fēnix 7 / 7 Pro
+        - fēnix 8
+        - epix 2 / epix 2 Pro
+        - Enduro 3
+        - Instinct 3 AMOLED
+        - Venu 3 / 3S
+        - Venu 4
+        - vivoactive 5
+        - vivoactive 6
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: watch-other
+    attributes:
+      label: Watch model, if Other
+      placeholder: e.g. MARQ (Gen 2) Aviator
+    validations:
+      required: false
+  - type: input
+    id: firmware
+    attributes:
+      label: Watch firmware version
+      description: On the watch, Settings → System → About.
+      placeholder: e.g. 22.18
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: App version
+      description: Garmin Connect → Connect IQ Store → installed apps, or "sideloaded" with the commit you built.
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: phone
+    attributes:
+      label: Phone and OS version
+      placeholder: e.g. iPhone 15, iOS 26.1 / Pixel 8, Android 16
+    validations:
+      required: true
+  - type: dropdown
+    id: gcm-running
+    attributes:
+      label: Was Garmin Connect Mobile running and connected to the watch?
+      options:
+        - "Yes"
+        - "No"
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: input
+    attributes:
+      label: Did you use buttons or touch?
+      options:
+        - Buttons
+        - Touch
+        - Both
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Start from opening the app. Say which screen you were on and what kind of set it was (plain, RPE, timed, one-sided, AMRAP).
+      placeholder: |
+        1. Open the app and start the workout
+        2. Log the first set of Squat
+        3. Hold Up, pick Undo set
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead. Screenshots or photos of the watch help.
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: CIQ_LOG.YML excerpt
+      description: |
+        If the app crashed or showed an error icon, copy the entries for this app from `GARMIN/APPS/LOGS/CIQ_LOG.YML` on the watch. Connect the watch by USB; on macOS use OpenMTP or Garmin Express. Write "none" if there is no entry.
+      render: yaml
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I removed my API key from anything I pasted.
+          required: true
+        - label: I searched existing issues.
+          required: true

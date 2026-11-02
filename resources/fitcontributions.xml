@@ -1,0 +1,15 @@
+<resources>
+    <!-- How Garmin Connect shows the activity's Connect IQ fields; ids match source/Recording.mc.
+         Shown only for apps installed from the Connect IQ Store (beta or public), not sideloaded ones.
+         The others (weight in kg, warm-up flag, totals as numbers, FIT exercise codes, Liftosaur id) are for tools. -->
+    <fitContributions>
+        <fitField id="4" displayInChart="false" displayInActivityLaps="true" displayInActivitySummary="false" sortOrder="0" dataLabel="@Strings.FitExercise" unitLabel="@Strings.FitNoUnit" />
+        <fitField id="2" displayInChart="false" displayInActivityLaps="true" displayInActivitySummary="false" sortOrder="1" precision="0" dataLabel="@Strings.FitSet" unitLabel="@Strings.FitNoUnit" />
+        <fitField id="0" displayInChart="false" displayInActivityLaps="true" displayInActivitySummary="false" sortOrder="2" precision="0" dataLabel="@Strings.FitReps" unitLabel="@Strings.FitNoUnit" />
+        <fitField id="12" displayInChart="false" displayInActivityLaps="true" displayInActivitySummary="false" sortOrder="3" dataLabel="@Strings.FitWeight" unitLabel="@Strings.FitNoUnit" />
+        <fitField id="5" displayInChart="false" displayInActivityLaps="false" displayInActivitySummary="true" sortOrder="4" dataLabel="@Strings.FitProgram" unitLabel="@Strings.FitNoUnit" />
+        <fitField id="6" displayInChart="false" displayInActivityLaps="false" displayInActivitySummary="true" sortOrder="5" dataLabel="@Strings.FitDay" unitLabel="@Strings.FitNoUnit" />
+        <fitField id="7" displayInChart="false" displayInActivityLaps="false" displayInActivitySummary="true" sortOrder="6" precision="0" dataLabel="@Strings.FitTotalSets" unitLabel="@Strings.FitNoUnit" />
+        <fitField id="13" displayInChart="false" displayInActivityLaps="false" displayInActivitySummary="true" sortOrder="7" dataLabel="@Strings.FitVolume" unitLabel="@Strings.FitNoUnit" />
+    </fitContributions>
+</resources>

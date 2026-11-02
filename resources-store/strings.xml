@@ -1,0 +1,4 @@
+<strings>
+    <!-- Store builds carry no key; each user enters theirs in Garmin Connect. -->
+    <string id="ApiKey" scope="background"></string>
+</strings>
