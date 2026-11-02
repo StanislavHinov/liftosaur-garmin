@@ -7,6 +7,7 @@ Guide for AI coding agents (and people) working on Lift Log for Liftosaur, an un
 | Task | Command | Done when |
 | --- | --- | --- |
 | Unit tests (fr170 simulator) | `scripts/test.sh` | last line starts with `PASSED` |
+| One test | `scripts/test.sh <testFunctionName>` | `PASSED (passed=1, ...)` |
 | Build every watch in `manifest.xml` | `scripts/package.sh` | `BUILD SUCCESSFUL`, writes `bin/LiftosaurGarmin.iq` |
 | Dev build with the built-in key | `scripts/build.sh` | `bin/LiftosaurGarmin.prg` |
 | One screen with fake data | `scripts/preview.sh <mode> [device]` | the simulator shows it; log in `bin/preview/run.log` |
@@ -14,7 +15,9 @@ Guide for AI coding agents (and people) working on Lift Log for Liftosaur, an un
 
 Preview modes: `rest`, `over`, `norest`, `hold`, `done`, `start`, `waiting`, `error`, `nokey`, `browse`, `prompt`, `edit`, `rpe`, `timed`, `timedwork`, `menu`, `overview`, `bg`.
 
-`scripts/test.sh` hangs if another app runs in the simulator; it kills `monkeydo` first, and if it still hangs, quit the simulator. A crash in the simulator prints `Error: Unhandled Exception` with a stack to `bin/preview/run.log` (previews) or the test output; always read it after a preview.
+Builds and tests need the Connect IQ SDK (found by `scripts/sdk.sh`), Java 17, `developer_key.der` in the repo root and `resources-secret/secrets.xml` (copy `secrets.example.xml`); the last two are gitignored. `monkey.jungle` is the dev build (fr170, built-in key); `store.jungle` is the store build (every watch, `resources-store` with an empty key). Type checking is off (`-l 0`).
+
+`scripts/test.sh` hangs if another app runs in the simulator; it kills `monkeydo` first, and if it still hangs, quit the simulator. The simulator also wedges after many runs: a preview or test stays on the blue triangle and never loads. Kill `monkeydo`, `MonkeyDoDeux` and `ConnectIQ.app`, start it again and wait about 20 s before the next run. A crash in the simulator prints `Error: Unhandled Exception` with a stack to `bin/preview/run.log` (previews) or the test output; always read it after a preview.
 
 ## Definition of done
 
@@ -40,6 +43,7 @@ Store (Application.Storage): workout, queue, rest, skipped, focus, rec, halt, no
 - **Views** in `source/ui/` read `Store`, call pure modules and draw. `Theme.drawRows` lays out a stack of rows sized from the watch's fonts (`Theme.TIERS`, largest that fits); never use fixed pixel sizes.
 - **Cursor** (the set to do next): `Store.cursor()`, which is `SlimWorkout.cursorAt` with the focus (the `entryId` of the exercise last logged). Don't call `SlimWorkout.cursor` from app code; it ignores the focus.
 - **Background sync** (`source/BgSync.mc`, `source/BgService.mc`): when the app closes with sets queued, `BgSchedule` registers a one-shot temporal event 5 minutes on. `BgService` then sends the queue with `BgSync`, retries every 5 minutes while offline, and on any other failure leaves the queue for the app and asks to open it (`Background.requestApplicationWake`). Opening the app cancels the event, so the app and the background never send at once.
+- **Glance and complication**: `Store.setGlance` stores the next or ongoing day for the glance (`GlanceView`, `(:glance)`) and publishes it as complication 0 (`Face.publish`, `resources/complications.xml`) for watch faces.
 - **Ticker** (`source/Ticker.mc`) is the one timer the screens share. Sync owns the only other timer.
 
 ## Testing rules
@@ -88,6 +92,19 @@ Source: `lambda/utils/apiv1Workout.ts` in https://github.com/astashov/liftosaur.
 ## Garmin exercises
 
 Garmin Connect builds its exercise list and muscle map from FIT `set` and `exercise_title` messages. A Connect IQ app can't write those: `ActivityRecording` only adds laps and developer fields (session, lap, record). So each lap carries developer fields `fit_category`, `fit_exercise` and `exercise_id`, for a companion tool to turn into exercise sets. The mapping table is `resources/jsonData/fit_exercises.json`, built by `tools/fit-exercises/` (see its README). It is about 19 KB in memory: `Controller.fitCode` loads it once per workout and keeps only that workout's codes.
+
+## Ids that must never change
+
+Changing these breaks installed apps or recorded activities:
+
+- The app id in `manifest.xml` (`a6d4e0df...`): the Connect IQ Store identifies the app by it. Every package must also be signed with the same `developer_key.der`.
+- FIT developer field ids in `source/Recording.mc` and `resources/fitcontributions.xml`: Garmin Connect and tools read past activities by id. Add new fields with new ids.
+- Complication id 0 in `resources/complications.xml`: watch faces subscribe to it.
+- Store keys (`Store.KEYS`): an update must read what the previous version left on the watch.
+
+## Workflow and releases
+
+`main` is protected: work on a branch, open a pull request, squash-merge (linear history, no force pushes). A release is a PR that bumps `Config.CLIENT` and adds `## What's new (<version>)` to `store/listing.md`; after merging, `scripts/release.sh <version>` builds from a clean checkout, tags and creates the GitHub release with the `.iq`. The store form answers are in `store/listing.md`. When `store/PRIVACY.md` changes, update the public copy linked there (a GitHub gist) too.
 
 ## Conventions
 
