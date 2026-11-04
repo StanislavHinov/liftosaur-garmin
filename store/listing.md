@@ -18,15 +18,15 @@ Log your Liftosaur workouts from your watch.
 
 ## Description
 
-Run your Liftosaur program from your wrist. The watch shows the current exercise, set, reps and weight, and logs each set to your Liftosaur account with one press of Start. The phone app updates as you train.
+Run your Liftosaur program from your wrist. The watch shows the current exercise, set, reps (or the rep range, such as 6-9) and weight, and logs each set to your Liftosaur account with one press of Start. The phone app updates as you train.
 
 - Start the next workout from your program, pick another day, or continue the one open on your phone.
 - Works with buttons or by touch alone: tap the reps or weight to change it, hold the screen for the menu. Weight changes by 2.5 kg or 5 lb.
 - Every set type: RPE, one-sided reps, asked weights, program variables, and timed sets with a get-ready countdown.
 - Swipe between sets and exercises, or hold Down for the next exercise; do exercises in any order. The workout overview shows each exercise's progress and next set.
 - Undo or edit a logged set; add a set.
-- Rest timer with a countdown ring that stays in step with the phone, one buzz when rest is over, and -15 s / +15 s / skip.
-- Heart rate on screen, and plates to load for barbell exercises.
+- Rest timer with a countdown ring that stays in step with the phone, also for sets checked on the phone, one buzz when rest is over, and -15 s / +15 s / skip.
+- Heart rate and the time of day on screen (the time can be turned off), and plates to load for barbell exercises.
 - Records a Garmin Strength Training activity with heart rate, calories and one lap per set (can be turned off).
 - Works offline: sets are kept on the watch and sent when your phone is back, even after you close the app.
 - In Garmin Connect, the activity's laps show each set's exercise, reps and weight, and the summary shows the program, day, sets and volume.
@@ -38,6 +38,12 @@ Requirements:
 - Garmin Connect must be running on your phone during the workout.
 
 Unofficial: not affiliated with Liftosaur or Garmin.
+
+## What's new (1.1.0)
+
+- The time of day next to the heart rate. Turn it off in the workout menu ("Hide time") or in the app's settings in Garmin Connect.
+- Rep ranges show as on the phone, such as 6-9, instead of only the top number.
+- Checking a set on the phone now starts its rest timer on the watch too.
 
 ## What's new (1.0.0)
 
