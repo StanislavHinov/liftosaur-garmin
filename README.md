@@ -32,7 +32,7 @@ Sets with RPE, left reps, an asked weight ("?") or program variables open an Inp
 
 The menu also has Pause, Save & finish, Discard Garmin activity and Discard workout (the Liftosaur workout and the Garmin activity). The Waiting screen's menu has "Resend N sets" when sets failed to sync.
 
-Settings in Garmin Connect: the Liftosaur API key, and "Record Garmin activity". Turn recording off when another tool, such as liftosaur2garmin, creates the Garmin activity, so you do not get two.
+Settings in Garmin Connect: the Liftosaur API key, "Record Garmin activity" and "Show the time next to the heart rate". Turn recording off when another tool, such as liftosaur2garmin, creates the Garmin activity, so you do not get two. "Show the time next to the heart rate" puts the time of day on the set screen; the workout menu has "Hide time" and "Show time" for it too.
 
 The glance shows the next or ongoing workout day. So does the app's complication, on watch faces that show Connect IQ complications.
 

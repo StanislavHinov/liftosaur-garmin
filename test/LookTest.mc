@@ -183,3 +183,13 @@ function lookShowsRepRangesLikeThePhone(logger as Test.Logger) as Boolean {
     Test.assertEqual(Look.repsTarget(set), "5+");
     return true;
 }
+
+(:test)
+function lookTimeOfDayFollowsTheWatchSetting(logger as Test.Logger) as Boolean {
+    Test.assertEqual(Look.timeOfDay(14, 5, true), "14:05");
+    Test.assertEqual(Look.timeOfDay(7, 30, true), "7:30");
+    Test.assertEqual(Look.timeOfDay(14, 5, false), "2:05");
+    Test.assertEqual(Look.timeOfDay(0, 9, false), "12:09");
+    Test.assertEqual(Look.timeOfDay(12, 0, false), "12:00");
+    return true;
+}

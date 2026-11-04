@@ -5,4 +5,7 @@
     <setting propertyKey="@Properties.recordActivity" title="@Strings.RecordTitle">
         <settingConfig type="boolean"/>
     </setting>
+    <setting propertyKey="@Properties.showClock" title="@Strings.ClockTitle">
+        <settingConfig type="boolean"/>
+    </setting>
 </settings>
