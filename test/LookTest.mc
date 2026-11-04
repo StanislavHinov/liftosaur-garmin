@@ -168,3 +168,18 @@ function lookOverviewLineShowsProgressAndNextSet(logger as Test.Logger) as Boole
     Test.assertEqual(Look.overviewLine(bw["entries"][1], false), "0/2 · 1:00");
     return true;
 }
+
+(:test)
+function lookShowsRepRangesLikeThePhone(logger as Test.Logger) as Boolean {
+    var w = SlimWorkout.slim(Fixtures.workoutRaw([]));
+    var set = w["entries"][1]["sets"][0];
+    Test.assertEqual(Look.repsTarget(set), "5");
+    set["minReps"] = 3;
+    Test.assertEqual(Look.repsTarget(set), "3-5");
+    Test.assertEqual(Look.overviewLine(w["entries"][1], false), "0/2 · 3-5×60kg");
+    set["isAmrap"] = true;
+    Test.assertEqual(Look.repsTarget(set), "3-5+");
+    set["minReps"] = 5;
+    Test.assertEqual(Look.repsTarget(set), "5+");
+    return true;
+}

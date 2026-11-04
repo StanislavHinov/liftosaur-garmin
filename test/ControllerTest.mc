@@ -523,3 +523,41 @@ function controllerNewWorkoutForgetsTheFocusedExercise(logger as Test.Logger) as
     Test.assert(Store.focus() == null);
     return true;
 }
+
+(:test)
+function controllerStartsRestForASetLoggedOnThePhone(logger as Test.Logger) as Boolean {
+    var api = new FakeApi();
+    var c = ControllerUtil.startedController(api, new FakeRec(), new FakeUi());
+    Test.assert(Store.rest() == null);
+    c.sync().poll();
+    api.respond(200, Fixtures.response(Fixtures.workoutRaw(["squatw"])));
+    Test.assertEqual(Store.rest()["setId"], "squatw");
+    Test.assertEqual(Store.rest()["dur"], 90);
+    // A later poll that brings nothing new keeps the running rest.
+    var at = Store.rest()["at"];
+    Store.setRest({"at" => at - 30, "dur" => 90, "setId" => "squatw"});
+    c.sync().poll();
+    api.respond(200, Fixtures.response(Fixtures.workoutRaw(["squatw"])));
+    Test.assertEqual(Store.rest()["at"], at - 30);
+    // The next phone set replaces the watch's rest, and the watch follows that exercise.
+    c.sync().poll();
+    api.respond(200, Fixtures.response(Fixtures.workoutRaw(["squatw", "bencha"])));
+    Test.assertEqual(Store.rest()["setId"], "bencha");
+    Test.assertEqual(Store.rest()["dur"], 120);
+    Test.assertEqual(Store.cursor()[0], 1);
+    Test.assertEqual(Store.cursor()[1], 1);
+    return true;
+}
+
+(:test)
+function controllerKeepsRestOfWatchSetWhenItsReplyComes(logger as Test.Logger) as Boolean {
+    var api = new FakeApi();
+    var c = ControllerUtil.startedController(api, new FakeRec(), new FakeUi());
+    c.logSet(5, 40.0);
+    var at = Store.rest()["at"];
+    Store.setRest({"at" => at - 30, "dur" => 90, "setId" => "squatw"});
+    api.respond(200, Fixtures.response(Fixtures.workoutRaw(["squatw"])));
+    Test.assertEqual(Store.rest()["setId"], "squatw");
+    Test.assert(Store.rest()["at"] <= at);
+    return true;
+}

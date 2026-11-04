@@ -104,6 +104,17 @@ module Look {
         };
     }
 
+    // The target reps as the phone shows them: "9", a range "6-9", and "+" for AMRAP.
+    function repsTarget(set) {
+        var reps = set["reps"];
+        if (reps == null) {
+            return "";
+        }
+        var min = set["minReps"];
+        var text = min != null && min < reps ? min.toString() + "-" + reps.toString() : reps.toString();
+        return set["isAmrap"] == true ? text + "+" : text;
+    }
+
     // The workout overview's line under an exercise: "Now · 1/3 · 5×100kg", or "Done · 3/3".
     function overviewLine(entry, isCurrent) {
         var counts = SlimWorkout.counts(entry);
@@ -118,7 +129,7 @@ module Look {
                 next = sets[j];
             }
         }
-        var reps = next["reps"] == null ? "" : next["reps"].toString();
+        var reps = repsTarget(next);
         var p = Weight.parse(next["weight"]);
         var target = p == null ? (reps.length() > 0 ? reps + " reps" : "") : reps + "×" + Weight.format(p[0], p[1]);
         if (next["setTimer"] != null) {

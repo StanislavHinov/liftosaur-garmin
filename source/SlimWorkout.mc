@@ -106,6 +106,25 @@ module SlimWorkout {
         return null;
     }
 
+    // [entry, set] of the last set done in after but not in before: one logged elsewhere, such as the phone.
+    function lastNewlyDone(before, after) {
+        var found = null;
+        var entries = after["entries"];
+        for (var i = 0; i < entries.size(); i++) {
+            var sets = entries[i]["sets"];
+            for (var j = 0; j < sets.size(); j++) {
+                if (sets[j]["completed"] == null) {
+                    continue;
+                }
+                var old = findSet(before, sets[j]["setId"]);
+                if (old == null || old["completed"] == null) {
+                    found = [entries[i], sets[j]];
+                }
+            }
+        }
+        return found;
+    }
+
     function markCompleted(w, setId, completed) {
         var s = findSet(w, setId);
         if (s == null) {

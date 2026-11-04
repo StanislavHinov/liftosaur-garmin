@@ -390,6 +390,10 @@ class ActiveSetView extends WatchUi.View {
     }
 
     function repsText(set) {
+        // The target reads like the phone ("6-9"), until the reps are changed or the set is logged.
+        if (set["completed"] == null && set["reps"] != null && _reps == set["reps"]) {
+            return Look.repsTarget(set);
+        }
         return _reps.toString() + (set["isAmrap"] == true ? "+" : "");
     }
 

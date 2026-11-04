@@ -77,6 +77,9 @@ module Preview {
                 if (specs[i][0].equals("bench")) {
                     s["rpe"] = 8;
                 }
+                if (specs[i][0].equals("rdl") && !list[j][0]) {
+                    s["minReps"] = 6;
+                }
                 if (specs[i][0].equals("plank")) {
                     s["setTimer"] = 60;
                 }

@@ -47,7 +47,7 @@ class FakeListener {
     function initialize() {
         calls = [];
     }
-    function onWorkoutUpdated() { calls.add("updated"); }
+    function onWorkoutUpdated(before) { calls.add("updated"); }
     function onWorkoutGone() { calls.add("gone"); }
     function onFinishSynced() { calls.add("finishSynced"); }
     function onClock() {}
