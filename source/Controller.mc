@@ -262,9 +262,7 @@ class Controller {
             var warm = set["isWarmup"] == true;
             _rec.lap(Look.lapLabel(entry["name"], warm), si + 1, warm, reps, weight, unit, fitCode(w, id), id);
         }
-        var timer = set["timer"];
-        var hasNext = Store.cursor() != null;
-        Store.setRest(timer != null && timer > 0 && hasNext ? {"at" => nowSec(), "dur" => timer, "setId" => set["setId"]} : null);
+        startRest(set);
         _notice = null;
         _sync.drain();
         _ui.slideActive(1);
@@ -528,7 +526,22 @@ class Controller {
         checkRestOver(nowSec());
     }
 
-    function onWorkoutUpdated() {
+    // The rest after a set, when it has one and a set is left to do.
+    function startRest(set) {
+        var timer = set["timer"];
+        var hasNext = Store.cursor() != null;
+        Store.setRest(timer != null && timer > 0 && hasNext ? {"at" => nowSec(), "dur" => timer, "setId" => set["setId"]} : null);
+    }
+
+    // before is the workout as the watch had it. A set logged on the phone starts its rest here too,
+    // and the watch follows that exercise, as after a set logged on the watch.
+    function onWorkoutUpdated(before) {
+        var w = Store.workout();
+        var done = before == null || w == null ? null : SlimWorkout.lastNewlyDone(before, w);
+        if (done != null) {
+            Store.setFocus(done[0]["entryId"]);
+            startRest(done[1]);
+        }
         _ui.refresh();
     }
 

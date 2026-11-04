@@ -206,7 +206,7 @@ class Sync {
         var w = SlimWorkout.slim(raw);
         SlimWorkout.applyPending(w, Store.queue());
         Store.setWorkout(w);
-        _listener.onWorkoutUpdated();
+        _listener.onWorkoutUpdated(local);
     }
 
     function dropWorkout(st) {
