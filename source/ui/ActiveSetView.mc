@@ -491,16 +491,28 @@ class ActiveSetView extends WatchUi.View {
         _hits.add([x0 + checkW + gapX, py - ph / 2, undoW, ph, :undo]);
     }
 
+    // "♥ 132", and the time after it when that setting is on: "♥ 132   14:05".
     function drawHeartRate(dc, y, font) {
         var info = Activity.getActivityInfo();
         var text = Look.heartRate(info == null ? null : info.currentHeartRate);
+        var clock = null;
+        if (Prefs.showClock()) {
+            var t = System.getClockTime();
+            clock = Look.timeOfDay(t.hour, t.min, System.getDeviceSettings().is24Hour);
+        }
         var s = Theme.capH(font) / 2;
         var textW = dc.getTextWidthInPixels(text, font);
-        var x = (dc.getWidth() - textW - s * 3) / 2;
+        var gap = s * 3;
+        var clockW = clock == null ? 0 : gap + dc.getTextWidthInPixels(clock, font);
+        var x = (dc.getWidth() - textW - s * 3 - clockW) / 2;
         var cy = y + Graphics.getFontAscent(font) - Theme.capH(font) / 2;
         Theme.heart(dc, x + s, cy, s);
         dc.setColor(Theme.GREY, Graphics.COLOR_TRANSPARENT);
         dc.drawText(x + s * 3, y, font, text, Graphics.TEXT_JUSTIFY_LEFT);
+        if (clock != null) {
+            dc.setColor(Theme.TEXT, Graphics.COLOR_TRANSPARENT);
+            dc.drawText(x + s * 3 + textW + gap, y, font, clock, Graphics.TEXT_JUSTIFY_LEFT);
+        }
     }
 
     function drawDone(dc, top, bottom) {

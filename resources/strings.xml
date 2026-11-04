@@ -3,6 +3,7 @@
     <string id="ApiKeyTitle">Liftosaur API key</string>
     <string id="ApiKeyPrompt">In Liftosaur: Settings, API Keys. Starts with lftsk_</string>
     <string id="RecordTitle">Record Garmin activity (turn off when using liftosaur2garmin)</string>
+    <string id="ClockTitle">Show the time next to the heart rate</string>
     <!-- Labels Garmin Connect shows for the activity's fields (resources/fitcontributions.xml). -->
     <string id="FitExercise">Exercise</string>
     <string id="FitSet">Set</string>

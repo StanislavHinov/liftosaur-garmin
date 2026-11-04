@@ -55,6 +55,7 @@ module Menus {
         menu.addItem(new WatchUi.MenuItem("Workout overview", null, :overview, null));
         menu.addItem(new WatchUi.MenuItem("Add set", null, :addSet, null));
         menu.addItem(new WatchUi.MenuItem(c.isPaused() ? "Unpause" : "Pause", null, :pause, null));
+        menu.addItem(new WatchUi.MenuItem(Prefs.showClock() ? "Hide time" : "Show time", null, :clock, null));
         menu.addItem(new WatchUi.MenuItem("Save & finish", null, :finish, null));
         menu.addItem(new WatchUi.MenuItem("Discard Garmin activity", null, :discardGarmin, null));
         menu.addItem(new WatchUi.MenuItem("Discard workout", "Liftosaur and Garmin", :discardAll, null));
@@ -109,6 +110,9 @@ class WorkoutMenuDelegate extends WatchUi.Menu2InputDelegate {
             _view.addSet();
         } else if (id == :discardAll) {
             Menus.confirm("Discard Liftosaur workout?", actions.method(:discardAllAsk));
+        } else if (id == :clock) {
+            Prefs.setShowClock(!Prefs.showClock());
+            WatchUi.requestUpdate();
         } else if (id == :pause) {
             getController().togglePause();
         } else if (id == :finish) {

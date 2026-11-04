@@ -42,6 +42,12 @@ module Look {
         return bpm == null || bpm <= 0 ? "--" : bpm.toString();
     }
 
+    // The time as the watch shows it: "14:05", or "2:05" on a 12-hour watch.
+    function timeOfDay(hour, min, is24) {
+        var h = is24 ? hour : (hour % 12 == 0 ? 12 : hour % 12);
+        return h.toString() + ":" + min.format("%02d");
+    }
+
     function showPlates(entry, set) {
         return "barbell".equals(entry["equipment"]) && Weight.platesText(set["plates"]).length() > 0;
     }
