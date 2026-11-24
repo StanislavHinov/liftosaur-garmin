@@ -16,6 +16,8 @@ class ActiveSetView extends WatchUi.View {
     // The browsed set as [entry, set]; null follows the cursor.
     var _pos = null;
     var _loadedDone = false;
+    var _sourceValues = null;
+    var _workoutStart = null;
     // Tap targets drawn this frame: [x, y, w, h, action].
     var _hits = [];
 
@@ -59,20 +61,25 @@ class ActiveSetView extends WatchUi.View {
         var entry = w["entries"][pos[0]];
         var set = entry["sets"][pos[1]];
         var done = set["completed"];
-        // A logged set shows what was logged; a set that is not done shows its target.
-        if (!set["setId"].equals(_setId) || _loadedDone != (done != null)) {
+        var incoming = SetValues.fromSet(set);
+        if (!set["setId"].equals(_setId) || _loadedDone != (done != null) || _workoutStart != w["startTime"]) {
             _setId = set["setId"];
             _loadedDone = done != null;
-            var reps = done != null && done["reps"] != null ? done["reps"] : set["reps"];
-            _reps = reps == null ? 0 : reps;
-            var target = Weight.parse(set["weight"]);
-            var p = done != null && done["weight"] != null ? Weight.parse(done["weight"]) : target;
-            _weight = p == null ? null : p[0];
-            _unit = p == null ? "kg" : p[1];
-            _step = Weight.step(_unit);
+            _workoutStart = w["startTime"];
+            clearEdits();
             _field = :reps;
         }
+        var values = SetValues.merge(_sourceValues, incoming, _reps, _weight, _unit);
+        _reps = values["reps"];
+        _weight = values["weight"];
+        _unit = values["unit"];
+        _step = Weight.step(_unit);
+        _sourceValues = values["reference"];
         return [entry, set, pos];
+    }
+
+    function clearEdits() {
+        _sourceValues = null;
     }
 
     function browse(dir) {
@@ -206,16 +213,18 @@ class ActiveSetView extends WatchUi.View {
         var f = kind == :reps
             ? Prompt.field("reps", "Reps", _reps, 1, 0, null, :reps, null)
             : Prompt.field("weight", "Weight (" + _unit + ")", _weight, _step, 0, null, :weight, _unit);
+        f["initialValue"] = f["value"];
         var view = new PromptView(c[0]["name"], [f], method(:setValue), "DONE");
         WatchUi.pushView(view, new PromptDelegate(view), WatchUi.SLIDE_UP);
+        return view;
     }
 
     function setValue(fields) {
         var f = fields[0];
         if (f["key"].equals("reps")) {
-            _reps = f["value"];
+            _reps = SetValues.editedValue(f, _reps, null);
         } else {
-            _weight = f["value"];
+            _weight = SetValues.editedValue(f, _weight, _unit);
         }
         WatchUi.requestUpdate();
     }
@@ -293,7 +302,9 @@ class ActiveSetView extends WatchUi.View {
         }
         _pos = null;
         if (c[1]["completed"] != null) {
-            getController().saveSet(pos[0], pos[1], _reps, _weight);
+            if (getController().saveSet(pos[0], pos[1], _reps, _weight)) {
+                clearEdits();
+            }
         } else {
             getController().logSetAt(pos[0], pos[1], _reps, _weight);
         }

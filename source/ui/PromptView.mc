@@ -172,7 +172,9 @@ class PromptLog {
         _active.backToCurrent();
         var completed = Prompt.completed(_base, fields);
         if (_isEdit) {
-            getController().saveCompleted(_pos[0], _pos[1], completed);
+            if (getController().saveCompleted(_pos[0], _pos[1], completed)) {
+                _active.clearEdits();
+            }
         } else {
             getController().logCompleted(_pos[0], _pos[1], completed, _reps, _weight);
         }
